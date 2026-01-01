@@ -1,13 +1,14 @@
-# Lintfra standalone devshell
-# For repos that only use lintfra directly
-{ pkgs, self', ... }:
+# Lintfra devshell using fragment composition
+{ pkgs, self', imp, ... }:
+let
+  shellHookFragments = imp.fragments ./shellHook.d;
+  packageFragments = imp.fragmentsWith { inherit pkgs self'; } ./packages.d;
+in
 {
   default = pkgs.mkShell {
-    inputsFrom = [ self'.devShells.lintfra ];
-    packages = [ self'.formatter ];
-
+    packages = packageFragments.asList ++ [ self'.formatter ];
     shellHook = ''
-      ${self'.devShells.lintfra.shellHook}
+      ${shellHookFragments.asString}
       echo ""
       echo "lintfra devshell"
     '';
