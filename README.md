@@ -16,7 +16,6 @@ lint --json  # JSON output
 - `allow-attribute-reason` - require reason on #[allow(...)]
 - `no-decorative-headings` - no `// ====` style comments
 - `no-short-comments` - flag trivial comments (<25 chars)
-- `pub-fn-needs-doc` - public functions need docstrings
 
 **lint/custom-rules/** (lint-runner)
 - `clippy` - runs cargo clippy
