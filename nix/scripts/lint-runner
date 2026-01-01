@@ -57,8 +57,8 @@ run_custom_rules() {
           pushd "$PROJECT_ROOT" >/dev/null
           # Run clippy and parse its JSON output
           # Schema: { reason, message: { level, message, code, spans, children, rendered } }
-          # Use jq to filter and transform in one pass (avoids subshell issues with while loop)
-          eval "$run_cmd" 2>&1 | jq -c '
+          # Use grep to filter JSON lines only, then jq to transform
+          eval "$run_cmd" 2>&1 | grep '^{' | jq -c '
             select(.reason == "compiler-message" and .message.level != "note") |
             .message as $msg |
             ($msg.spans // [])[] |
