@@ -6,23 +6,29 @@ Shared linting infrastructure injected into projects via imp.gits.
 
 Lintfra files are synced into target projects under `nix/outputs/perSystem/` and `lint/`.
 
-imp.lib's tree automatically merges `.d/` directories:
-- `packages.d/10-lint.nix` is merged into `self'.packages` (provides `self'.packages.lint`)
-- `shell-packages.d/10-lintfra.nix` provides devshell packages (used via `imp.fragmentsWith`)
+imp.lib auto-merges `packages.d/` into `self'.packages`:
+- `packages.d/10-lint.nix` provides `self'.packages.lint`
 
-No manual configuration needed in target projects - just sync the files and it works.
+Other `.d` directories are consumed via `imp.fragments`:
+- `shell-packages.d/` - devshell package lists
+- `shellHook.d/` - shell script fragments
+
+No manual configuration needed - just sync the files and it works.
 
 ## Files Provided
 
-- `packages.d/10-lint.nix` - lint package (merged into `self'.packages`)
-- `shell-packages.d/10-lintfra.nix` - devshell packages fragment (list)
-- `shellHook.d/10-lintfra.sh` - pre-commit hook setup
+- `packages.d/10-lint.nix` - lint package (auto-merged into `self'.packages`)
+- `shell-packages.d/10-lintfra.nix` - devshell packages (list, via `imp.fragmentsWith`)
+- `shellHook.d/10-lintfra.sh` - pre-commit hook setup (via `imp.fragments`)
 - `nix/scripts/lint-runner` - unified ast-grep + custom rules runner
 - `nix/scripts/pre-commit` - git hook
 - `lint/` - ast-grep rules and custom rule definitions
 
 ## Directory Conventions
 
-- `packages.d/` - attrset fragments merged into `self'.packages`
+imp.lib auto-merges only known flake output `.d` directories:
+- `packages.d/`, `devShells.d/`, `checks.d/`, `apps.d/`, etc.
+
+Other `.d` directories are for manual fragment collection:
 - `shell-packages.d/` - list fragments for devshell packages
-- `shellHook.d/` - shell script fragments concatenated into shellHook
+- `shellHook.d/` - shell script fragments for shellHook
