@@ -1,6 +1,6 @@
 # lintfra
 
-Shared linting infrastructure injected into projects via imp.gitbits.
+Shared linting infrastructure injected into projects via imp.gits.
 
 ## Integration
 
