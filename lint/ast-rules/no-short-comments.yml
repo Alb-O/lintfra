@@ -1,8 +1,7 @@
 id: no-short-comments
 language: rust
 severity: info
-message: "Short single-line comments may not be necessary. Code should be self-explanatory."
-note: "Consider moving important context to function docstrings with examples, or removing if truly trivial."
+message: "Short comments often unnecessary; prefer self-explanatory code or more comprehensive docstrings with # headgings and examples"
 files:
   - "**/*.rs"
 ignores:

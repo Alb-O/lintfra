@@ -1,8 +1,7 @@
 id: no-decorative-headings
 language: rust
 severity: warning
-message: "Avoid decorative heading-like patterns in comments (e.g., // ===...)."
-note: "Consider using more comprehensive docstrings (/// or //!) with Markdown headers (#) for organization, or separate the file itself into modular pieces."
+message: "Avoid decorative section-break comments. Move into /// docstrings with # headers and examples if possible"
 files:
   - "**/*.rs"
 ignores:
