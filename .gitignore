@@ -1,0 +1,2 @@
+# Generated ast-grep rules (from lint/rules/*.nix)
+lint/ast-rules/*.yml
