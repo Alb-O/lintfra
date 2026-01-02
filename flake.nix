@@ -37,7 +37,7 @@
       imports = [ imp.flakeModules.default ];
 
       imp = {
-        src = ./outputs;
+        src = ./nix/outputs;
         args = {
           inherit self treefmt-nix imp-fmt;
         };
