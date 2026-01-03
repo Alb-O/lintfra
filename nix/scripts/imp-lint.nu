@@ -3,8 +3,12 @@
 # Usage: `use imp-lint *` then call `imp lint`
 
 # Injected at build time by Nix (fallback to env var for dev)
+# Note: We use a separate placeholder for the "was this injected?" check because
+# --replace-warn substitutes ALL occurrences, including the comparison.
 const IMP_LINT_RULES = "@impLintRules@"
+const IMP_LINT_RULES_INJECTED = @impLintRulesInjected@
 const IMP_LINT_CUSTOM_RULES = r#'@impLintCustomRules@'#
+const IMP_LINT_CUSTOM_RULES_INJECTED = @impLintCustomRulesInjected@
 
 def make-finding [
     rule_id: string
@@ -35,7 +39,7 @@ def run-ast-grep [rules_dir?: string]: nothing -> list {
 
     # Use provided rules dir, or fall back to const/env, or default location
     let dir = $rules_dir | default (
-        if $IMP_LINT_RULES != "@impLintRules@" { $IMP_LINT_RULES }
+        if $IMP_LINT_RULES_INJECTED { $IMP_LINT_RULES }
         else { $env.IMP_LINT_RULES? | default "lint/ast-rules" }
     )
     
@@ -135,7 +139,7 @@ def run-file-metric-rule [rule: record, project_root: string]: nothing -> list {
 
 # Run all custom rules (from const or env as JSON)
 def run-custom-rules [project_root: string]: nothing -> list {
-    let rules_json = if $IMP_LINT_CUSTOM_RULES != r#'@impLintCustomRules@'# {
+    let rules_json = if $IMP_LINT_CUSTOM_RULES_INJECTED {
         $IMP_LINT_CUSTOM_RULES
     } else {
         $env.IMP_LINT_CUSTOM_RULES? | default "[]"

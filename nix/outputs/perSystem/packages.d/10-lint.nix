@@ -42,7 +42,9 @@ let
     mkdir -p $out/lib
     substitute ${moduleScript} $out/lib/imp-lint \
       --replace-warn '@impLintRules@' '${generatedRules}' \
-      --replace-warn "@impLintCustomRules@" '${customRulesJson}'
+      --replace-warn '@impLintRulesInjected@' 'true' \
+      --replace-warn "@impLintCustomRules@" '${customRulesJson}' \
+      --replace-warn '@impLintCustomRulesInjected@' 'true'
   '';
 in
 {
