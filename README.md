@@ -13,11 +13,13 @@ lint --json  # JSON output
 ## Rules
 
 **lint/ast-rules/** (ast-grep)
+
 - `allow-attribute-reason` - require reason on #[allow(...)]
 - `no-decorative-headings` - no `// ====` style comments
-- `no-short-comments` - flag trivial comments (<25 chars)
+- `no-short-comments` - flag trivial comments (\<25 chars)
 
 **lint/custom-rules/** (lint-runner)
+
 - `clippy` - runs cargo clippy
 - `file-too-long` - flag files >450 lines
 
